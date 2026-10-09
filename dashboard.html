@@ -1,0 +1,826 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a2f7a">
+
+  <title>Dashboard - BKK Banjarmasin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Tambahan untuk tombol logout dan tampilan status */
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 13px;
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--navy);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      background: #fff0f0;
+      color: #c62828;
+    }
+
+    .status-info {
+      padding: 12px 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stat small {
+      display: block;
+    }
+
+    @media (max-width: 480px) {
+      .topbar {
+        flex-wrap: wrap;
+      }
+
+      .search {
+        width: 100%;
+      }
+
+      .tools {
+        width: 100%;
+        justify-content: flex-end;
+      }
+
+      .hero h1 {
+        font-size: 22px;
+        overflow-wrap: anywhere;
+      }
+
+      .row {
+        gap: 9px;
+        padding: 12px;
+      }
+
+      .row time {
+        font-size: 10px;
+        white-space: normal;
+        text-align: right;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Ikon SVG -->
+<svg width="0" height="0"
+     style="position:absolute"
+     aria-hidden="true"
+     focusable="false">
+
+  <symbol id="home" viewBox="0 0 24 24">
+    <path d="M3 11l9-8 9 8M5 10v10h14V10M10 20v-6h4v6"/>
+  </symbol>
+
+  <symbol id="users" viewBox="0 0 24 24">
+    <circle cx="9" cy="8" r="4"/>
+    <path d="M2 21c0-4 3.5-6 7-6s7 2 7 6M16 4a4 4 0 010 8M22 21c0-3-2-5-4-5.6"/>
+  </symbol>
+
+  <symbol id="box" viewBox="0 0 24 24">
+    <path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/>
+  </symbol>
+
+  <symbol id="stack" viewBox="0 0 24 24">
+    <path d="M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4"/>
+  </symbol>
+
+  <symbol id="chart" viewBox="0 0 24 24">
+    <path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>
+  </symbol>
+
+  <symbol id="wallet" viewBox="0 0 24 24">
+    <rect x="3" y="6" width="18" height="13" rx="3"/>
+    <path d="M3 10h18M16 14.5h2"/>
+  </symbol>
+
+  <symbol id="send" viewBox="0 0 24 24">
+    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+  </symbol>
+
+  <symbol id="inbox" viewBox="0 0 24 24">
+    <path d="M22 12h-6l-2 3h-4l-2-3H2M5.5 5h13L22 12v6a2 2 0 01-2 2H4a2 2 0 01-2-2v-6l3.5-7z"/>
+  </symbol>
+
+  <symbol id="search" viewBox="0 0 24 24">
+    <circle cx="11" cy="11" r="7"/>
+    <path d="M21 21l-4.3-4.3"/>
+  </symbol>
+
+  <symbol id="bell" viewBox="0 0 24 24">
+    <path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9M10 21h4"/>
+  </symbol>
+
+  <symbol id="cal" viewBox="0 0 24 24">
+    <rect x="3" y="5" width="18" height="16" rx="2"/>
+    <path d="M3 10h18M8 3v4M16 3v4"/>
+  </symbol>
+
+  <symbol id="arrow" viewBox="0 0 24 24">
+    <path d="M5 12h14M13 6l6 6-6 6"/>
+  </symbol>
+
+  <symbol id="clock" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M12 7v5l3 2"/>
+  </symbol>
+</svg>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">K</div>
+      <div>
+        <b>Kemenkes</b>
+        <small>BKK Banjarmasin</small>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Menu utama">
+      <a href="#beranda" class="active">
+        <svg class="i"><use href="#home"/></svg>
+        Beranda
+      </a>
+
+      <a href="#kepegawaian">
+        <svg class="i"><use href="#users"/></svg>
+        Kepegawaian
+      </a>
+
+      <a href="#inventaris">
+        <svg class="i"><use href="#stack"/></svg>
+        Inventaris
+      </a>
+
+      <a href="#persediaan">
+        <svg class="i"><use href="#box"/></svg>
+        Persediaan
+      </a>
+
+      <a href="#laporan">
+        <svg class="i"><use href="#chart"/></svg>
+        Laporan
+      </a>
+
+      <a href="#keuangan">
+        <svg class="i"><use href="#wallet"/></svg>
+        Keuangan
+      </a>
+
+      <a href="#surat-keluar">
+        <svg class="i"><use href="#send"/></svg>
+        Surat Keluar
+      </a>
+    </nav>
+
+    <svg class="wave" viewBox="0 0 236 150"
+         preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 60 C60 30 120 100 236 50 V150 H0Z"
+            fill="#2a6fe0" opacity=".55"/>
+      <path d="M0 95 C70 70 140 130 236 90 V150 H0Z"
+            fill="#4a8cf0" opacity=".45"/>
+    </svg>
+  </aside>
+
+  <!-- KONTEN UTAMA -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <label class="search">
+        <svg class="i"><use href="#search"/></svg>
+        <input id="pencarian"
+               type="search"
+               placeholder="Cari menu atau data..."
+               aria-label="Cari menu atau data">
+      </label>
+
+      <div class="tools">
+        <button class="icon-btn"
+                type="button"
+                aria-label="Notifikasi"
+                title="Notifikasi">
+          <svg class="i"><use href="#bell"/></svg>
+          <span class="badge"></span>
+        </button>
+
+        <div class="user">
+          <span class="avatar">U</span>
+          <div>
+            Memuat pengguna...
+            <small>Petugas</small>
+          </div>
+        </div>
+
+        <button id="btnLogout"
+                class="logout-btn"
+                type="button">
+          Keluar
+        </button>
+      </div>
+    </header>
+
+    <!-- ISI DASHBOARD -->
+    <main class="content" id="beranda">
+
+      <!-- HERO -->
+      <section class="hero">
+        <h1>Selamat Datang</h1>
+
+        <p>
+          Di Sistem Informasi Manajemen Data<br>
+          Balai Kekarantinaan Kesehatan Kelas I Banjarmasin
+        </p>
+
+        <div class="meta">
+          <svg class="i"><use href="#cal"/></svg>
+          <span id="tanggal">Memuat tanggal...</span>
+        </div>
+
+        <div class="motto">
+          "Sehat Bersama<br>Lindungi Negeri"
+        </div>
+
+        <svg class="building"
+             viewBox="0 0 340 190"
+             preserveAspectRatio="xMaxYMax slice"
+             aria-hidden="true">
+          <path d="M0 190V120l70-40h270v110z"
+                fill="#fff" opacity=".14"/>
+          <rect x="90" y="85" width="250" height="105"
+                fill="#f4f1e4"/>
+          <rect x="90" y="85" width="250" height="14"
+                fill="#2f8f6a"/>
+
+          <g fill="#7ba2d6">
+            <rect x="104" y="112" width="22" height="26"/>
+            <rect x="138" y="112" width="22" height="26"/>
+            <rect x="172" y="112" width="22" height="26"/>
+            <rect x="206" y="112" width="22" height="26"/>
+            <rect x="240" y="112" width="22" height="26"/>
+            <rect x="274" y="112" width="22" height="26"/>
+            <rect x="308" y="112" width="22" height="26"/>
+
+            <rect x="104" y="150" width="22" height="26"/>
+            <rect x="138" y="150" width="22" height="26"/>
+            <rect x="206" y="150" width="22" height="26"/>
+            <rect x="240" y="150" width="22" height="26"/>
+            <rect x="274" y="150" width="22" height="26"/>
+            <rect x="308" y="150" width="22" height="26"/>
+          </g>
+
+          <rect x="168" y="146" width="30" height="44"
+                fill="#2f8f6a"/>
+        </svg>
+      </section>
+
+      <!-- STATISTIK LAPORAN -->
+      <section class="stats" aria-label="Ringkasan laporan">
+
+        <a href="#aktivitas" class="stat">
+          <span class="ic">
+            <svg class="i"><use href="#stack"/></svg>
+          </span>
+          <div>
+            <span class="lbl">Total Laporan</span>
+            <b id="s1">0</b>
+            <small>seluruh laporan</small>
+          </div>
+          <svg class="i go"><use href="#arrow"/></svg>
+        </a>
+
+        <a href="#aktivitas" class="stat">
+          <span class="ic">
+            <svg class="i"><use href="#box"/></svg>
+          </span>
+          <div>
+            <span class="lbl">Laporan Baru</span>
+            <b id="s2">0</b>
+            <small>menunggu proses</small>
+          </div>
+          <svg class="i go"><use href="#arrow"/></svg>
+        </a>
+
+        <a href="#aktivitas" class="stat">
+          <span class="ic">
+            <svg class="i"><use href="#inbox"/></svg>
+          </span>
+          <div>
+            <span class="lbl">Sedang Diproses</span>
+            <b id="s3">0</b>
+            <small>dalam penanganan</small>
+          </div>
+          <svg class="i go"><use href="#arrow"/></svg>
+        </a>
+
+        <a href="#aktivitas" class="stat">
+          <span class="ic">
+            <svg class="i"><use href="#send"/></svg>
+          </span>
+          <div>
+            <span class="lbl">Laporan Selesai</span>
+            <b id="s4">0</b>
+            <small>telah diselesaikan</small>
+          </div>
+          <svg class="i go"><use href="#arrow"/></svg>
+        </a>
+
+      </section>
+
+      <!-- MENU UTAMA -->
+      <div class="sec">
+        <div>
+          <h2>Menu Utama</h2>
+          <p>Pilih menu untuk mengelola data sesuai kebutuhan.</p>
+        </div>
+      </div>
+
+      <nav class="menu" aria-label="Menu pintas">
+
+        <a href="#kepegawaian" class="card c1">
+          <span class="tile">
+            <svg class="i"><use href="#users"/></svg>
+          </span>
+          <h3>BMN Non Kesehatan</h3>
+          <p>Data pegawai dan kehadiran.</p>
+          <span class="more">Buka
+            <svg class="i" style="width:14px;height:14px">
+              <use href="#arrow"/>
+            </svg>
+          </span>
+        </a>
+
+        <a href="#inventaris" class="card c2">
+          <span class="tile">
+            <svg class="i"><use href="#stack"/></svg>
+          </span>
+          <h3>Inventaris</h3>
+          <p>Data barang dan kondisi barang.</p>
+          <span class="more">Buka
+            <svg class="i" style="width:14px;height:14px">
+              <use href="#arrow"/>
+            </svg>
+          </span>
+        </a>
+
+        <a href="#persediaan" class="card c3">
+          <span class="tile">
+            <svg class="i"><use href="#box"/></svg>
+          </span>
+          <h3>Persediaan</h3>
+          <p>Data persediaan barang.</p>
+          <span class="more">Buka
+            <svg class="i" style="width:14px;height:14px">
+              <use href="#arrow"/>
+            </svg>
+          </span>
+        </a>
+
+        <a href="#keuangan" class="card c4">
+          <span class="tile">
+            <svg class="i"><use href="#wallet"/></svg>
+          </span>
+          <h3>Keuangan</h3>
+          <p>Laporan PNBP dan transaksi.</p>
+          <span class="more">Buka
+            <svg class="i" style="width:14px;height:14px">
+              <use href="#arrow"/>
+            </svg>
+          </span>
+        </a>
+
+        <a href="#surat-masuk" class="card c5">
+          <span class="tile">
+            <svg class="i"><use href="#inbox"/></svg>
+          </span>
+          <h3>Surat Masuk</h3>
+          <p>Data surat masuk dan disposisi.</p>
+          <span class="more">Buka
+            <svg class="i" style="width:14px;height:14px">
+              <use href="#arrow"/>
+            </svg>
+          </span>
+        </a>
+
+        <a href="#surat-keluar" class="card c6">
+          <span class="tile">
+            <svg class="i"><use href="#send"/></svg>
+          </span>
+          <h3>Surat Keluar</h3>
+          <p>Data surat keluar berdasarkan tujuan.</p>
+          <span class="more">Buka
+            <svg class="i" style="width:14px;height:14px">
+              <use href="#arrow"/>
+            </svg>
+          </span>
+        </a>
+
+        <a href="#laporan" class="card c7">
+          <span class="tile">
+            <svg class="i"><use href="#chart"/></svg>
+          </span>
+          <h3>Laporan</h3>
+          <p>Rekapitulasi seluruh laporan.</p>
+          <span class="more">Buka
+            <svg class="i" style="width:14px;height:14px">
+              <use href="#arrow"/>
+            </svg>
+          </span>
+        </a>
+
+      </nav>
+
+      <!-- AKTIVITAS -->
+      <div class="sec" id="laporan">
+        <div>
+          <h2>Aktivitas Terbaru</h2>
+          <p>Data laporan terbaru dari sistem.</p>
+        </div>
+      </div>
+
+      <section class="activity"
+               id="aktivitas"
+               aria-live="polite">
+        <div class="status-info">Memuat laporan...</div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- SUPABASE DAN LOGIKA DASHBOARD -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+(() => {
+  "use strict";
+
+  const SUPABASE_URL =
+    "https://dgrxjdjcehdejwyiuhwt.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_VG7in10o-Bw8kXhxACmdew_wn1fpqxs";
+
+  const db = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  const $ = selector => document.querySelector(selector);
+
+  const hari = [
+    "Minggu", "Senin", "Selasa", "Rabu",
+    "Kamis", "Jumat", "Sabtu"
+  ];
+
+  const bulan = [
+    "Januari", "Februari", "Maret", "April",
+    "Mei", "Juni", "Juli", "Agustus",
+    "September", "Oktober", "November", "Desember"
+  ];
+
+  let timerRealtime = null;
+  let channelLaporan = null;
+  let sedangMemuat = false;
+  let perluMuatUlang = false;
+
+  function perbaruiTanggal() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    const el = $("#tanggal");
+
+    if (!el) return;
+
+    el.textContent =
+      `${hari[d.getDay()]}, ${d.getDate()} ` +
+      `${bulan[d.getMonth()]} ${d.getFullYear()} | ` +
+      `${pad(d.getHours())}:${pad(d.getMinutes())} WITA`;
+  }
+
+  function formatTanggal(value) {
+    if (!value) return "-";
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) return "-";
+
+    return date.toLocaleString("id-ID", {
+      dateStyle: "medium",
+      timeStyle: "short",
+      timeZone: "Asia/Makassar"
+    });
+  }
+
+  function tampilkanPesan(pesan) {
+    const container = $("#aktivitas");
+    if (!container) return;
+
+    container.replaceChildren();
+
+    const row = document.createElement("div");
+    row.className = "row";
+
+    const text = document.createElement("div");
+    text.className = "txt";
+
+    const small = document.createElement("small");
+    small.textContent = pesan;
+
+    text.appendChild(small);
+    row.appendChild(text);
+    container.appendChild(row);
+  }
+
+  function tampilkanAktivitas(data) {
+    const container = $("#aktivitas");
+    if (!container) return;
+
+    container.replaceChildren();
+
+    if (!data.length) {
+      tampilkanPesan(
+        "Belum ada laporan. Aktivitas akan muncul setelah data laporan ditambahkan."
+      );
+      return;
+    }
+
+    data.slice(0, 5).forEach(item => {
+      const row = document.createElement("div");
+      row.className = "row";
+
+      const dot = document.createElement("span");
+      dot.className = "dot";
+      dot.textContent = "•";
+
+      const text = document.createElement("div");
+      text.className = "txt";
+
+      const title = document.createElement("b");
+      title.textContent = item.judul || "Tanpa judul";
+
+      const detail = document.createElement("small");
+      detail.textContent =
+        `${item.kategori || "umum"} · Status: ${item.status || "baru"}`;
+
+      const time = document.createElement("time");
+      time.textContent = formatTanggal(item.dibuat_pada);
+
+      text.append(title, detail);
+      row.append(dot, text, time);
+      container.appendChild(row);
+    });
+  }
+
+  function tampilkanStatistik(data) {
+    const statistik = {
+      s1: data.length,
+      s2: data.filter(item => item.status === "baru").length,
+      s3: data.filter(item => item.status === "diproses").length,
+      s4: data.filter(item => item.status === "selesai").length
+    };
+
+    Object.entries(statistik).forEach(([id, jumlah]) => {
+      const el = document.getElementById(id);
+
+      if (el) {
+        el.textContent = jumlah.toLocaleString("id-ID");
+      }
+    });
+  }
+
+  async function muatDashboard() {
+    if (sedangMemuat) {
+      perluMuatUlang = true;
+      return;
+    }
+
+    sedangMemuat = true;
+
+    try {
+      const { data: auth, error: authError } =
+        await db.auth.getUser();
+
+      if (authError || !auth.user) {
+        location.replace("index.html");
+        return;
+      }
+
+      const user = auth.user;
+
+      // Ambil profil jika tabel profiles sudah tersedia.
+      const { data: profil, error: profilError } =
+        await db.from("profiles")
+          .select("nama, role")
+          .eq("id", user.id)
+          .maybeSingle();
+
+      if (profilError) {
+        console.warn(
+          "Profil tidak dapat dimuat:",
+          profilError.message
+        );
+      }
+
+      const nama =
+        profil?.nama || user.email || "Pengguna";
+
+      const role = profil?.role || "petugas";
+
+      const userEl = $(".user");
+
+      if (userEl) {
+        userEl.replaceChildren();
+
+        const avatar = document.createElement("span");
+        avatar.className = "avatar";
+        avatar.textContent = nama.charAt(0).toUpperCase();
+
+        const info = document.createElement("div");
+        info.appendChild(document.createTextNode(nama));
+
+        const roleEl = document.createElement("small");
+        roleEl.textContent = role;
+
+        info.appendChild(roleEl);
+        userEl.append(avatar, info);
+      }
+
+      const sapaan = $(".hero h1");
+
+      if (sapaan) {
+        sapaan.textContent = `Selamat Datang, ${nama}`;
+      }
+
+      // Ambil laporan terbaru dari Supabase.
+      const { data: laporan, error: laporanError } =
+        await db.from("laporan")
+          .select("id, judul, kategori, status, dibuat_pada")
+          .order("dibuat_pada", { ascending: false })
+          .limit(500);
+
+      if (laporanError) {
+        console.error(
+          "Gagal memuat laporan:",
+          laporanError.message
+        );
+
+        tampilkanPesan(
+          "Laporan gagal dimuat. Periksa tabel laporan dan izin akses Supabase."
+        );
+        return;
+      }
+
+      const data = laporan || [];
+
+      tampilkanStatistik(data);
+      tampilkanAktivitas(data);
+
+    } catch (error) {
+      console.error("Kesalahan dashboard:", error);
+
+      tampilkanPesan(
+        "Terjadi kesalahan ketika memuat dashboard. Periksa Console browser."
+      );
+
+    } finally {
+      sedangMemuat = false;
+
+      if (perluMuatUlang) {
+        perluMuatUlang = false;
+
+        clearTimeout(timerRealtime);
+
+        timerRealtime = setTimeout(() => {
+          muatDashboard();
+        }, 300);
+      }
+    }
+  }
+
+  async function logout() {
+    const button = $("#btnLogout");
+
+    if (button) {
+      button.disabled = true;
+      button.textContent = "Keluar...";
+    }
+
+    const { error } = await db.auth.signOut();
+
+    if (error) {
+      console.error("Logout gagal:", error.message);
+      alert("Logout gagal. Silakan coba lagi.");
+
+      if (button) {
+        button.disabled = false;
+        button.textContent = "Keluar";
+      }
+
+      return;
+    }
+
+    location.replace("index.html");
+  }
+
+  async function mulaiDashboard() {
+    perbaruiTanggal();
+    setInterval(perbaruiTanggal, 30000);
+
+    $("#btnLogout")?.addEventListener("click", logout);
+
+    try {
+      const { data, error } = await db.auth.getSession();
+
+      if (error || !data.session) {
+        location.replace("index.html");
+        return;
+      }
+
+      await muatDashboard();
+
+      // Dengarkan perubahan pada tabel laporan.
+      channelLaporan = db
+        .channel("dashboard-laporan")
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "laporan"
+          },
+          () => {
+            clearTimeout(timerRealtime);
+
+            timerRealtime = setTimeout(() => {
+              muatDashboard();
+            }, 300);
+          }
+        )
+        .subscribe(status => {
+          if (status === "CHANNEL_ERROR") {
+            console.error(
+              "Realtime gagal tersambung. Periksa pengaturan publikasi Supabase."
+            );
+          }
+        });
+
+    } catch (error) {
+      console.error("Gagal menjalankan dashboard:", error);
+
+      tampilkanPesan(
+        "Dashboard gagal dijalankan. Periksa koneksi dan Console browser."
+      );
+    }
+  }
+
+  // Pencarian menu berdasarkan teks.
+  $("#pencarian")?.addEventListener("input", event => {
+    const kata = event.target.value
+      .trim()
+      .toLocaleLowerCase("id-ID");
+
+    document.querySelectorAll(".menu .card").forEach(card => {
+      const cocok = card.textContent
+        .toLocaleLowerCase("id-ID")
+        .includes(kata);
+
+      card.style.display = cocok ? "" : "none";
+    });
+  });
+
+  // Mulai setelah dokumen siap.
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      mulaiDashboard,
+      { once: true }
+    );
+  } else {
+    mulaiDashboard();
+  }
+})();
+</script>
+
+</body>
+</html>
